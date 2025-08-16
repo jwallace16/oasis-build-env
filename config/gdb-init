@@ -1,0 +1,72 @@
+# config/gdb-init
+# GDB initialization for OASIS debugging
+
+# Pretty printing for STL containers
+set print pretty on
+set print array on
+set print array-indexes on
+
+# Show source context when debugging
+set listsize 20
+
+# Enable history
+set history save on
+set history size 10000
+set history filename ~/.gdb_history
+
+# Python pretty printers for STL
+python
+import sys
+sys.path.insert(0, '/usr/share/gdb/auto-load')
+end
+
+# Custom commands for OASIS debugging
+define print_vector3
+    if $argc == 1
+        printf "Vector3: [%g, %g, %g]\n", $arg0.x, $arg0.y, $arg0.z
+    else
+        printf "Usage: print_vector3 <vector3_variable>\n"
+    end
+end
+
+define print_matrix3
+    if $argc == 1
+        printf "Matrix3:\n"
+        printf "  [%g, %g, %g]\n", $arg0.data[0], $arg0.data[1], $arg0.data[2]
+        printf "  [%g, %g, %g]\n", $arg0.data[3], $arg0.data[4], $arg0.data[5]
+        printf "  [%g, %g, %g]\n", $arg0.data[6], $arg0.data[7], $arg0.data[8]
+    else
+        printf "Usage: print_matrix3 <matrix3_variable>\n"
+    end
+end
+
+define print_quaternion
+    if $argc == 1
+        printf "Quaternion: [w=%g, x=%g, y=%g, z=%g]\n", $arg0.w, $arg0.x, $arg0.y, $arg0.z
+    else
+        printf "Usage: print_quaternion <quaternion_variable>\n"
+    end
+end
+
+# Breakpoint shortcuts for common debugging scenarios
+define break_on_exception
+    catch throw
+    catch catch
+end
+
+# Memory debugging helpers
+define check_heap
+    call malloc_stats()
+end
+
+# OASIS-specific debugging helpers
+define oasis_debug_state
+    printf "=== OASIS State Debug ===\n"
+    # Add custom state printing logic here
+end
+
+# Auto-load project-specific GDB scripts
+set auto-load safe-path /workspace
+
+# Color output
+set style enabled on

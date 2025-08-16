@@ -1,0 +1,70 @@
+# .dockerignore for build context optimization
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+docs/
+*.md
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+build/
+*.o
+*.so
+*.a
+
+# Docker files (except the ones we need)
+docker-compose.yml
+docker-compose.*.yml
+
+# Cache and temporary files
+.docker-volumes/
+*.tmp
+*.log
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+
+# Coverage and test results
+htmlcov/
+.coverage
+.pytest_cache/
+test-results/
+
+# Package files
+*.tar.gz
+*.zip
+*.deb
+*.rpm
+
+# Secrets and sensitive files
+*.key
+*.pem
+*.crt
+secrets/

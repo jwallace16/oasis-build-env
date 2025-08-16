@@ -1,0 +1,44 @@
+# requirements/python-requirements.txt
+# Python packages for OASIS development
+
+# Core scientific computing
+numpy>=1.21.0
+scipy>=1.7.0
+matplotlib>=3.5.0
+
+# Python bindings and development
+pybind11>=2.10.0
+setuptools>=65.0.0
+wheel>=0.37.0
+build>=0.8.0
+
+# Testing frameworks
+pytest>=7.0.0
+pytest-cov>=4.0.0
+pytest-xdist>=2.5.0
+hypothesis>=6.0.0
+
+# Development tools
+black>=22.0.0
+flake8>=5.0.0
+mypy>=0.991
+isort>=5.10.0
+
+# Documentation
+sphinx>=5.0.0
+sphinx-rtd-theme>=1.0.0
+breathe>=4.34.0  # For C++ documentation integration
+
+# Jupyter and interactive development
+ipython>=8.0.0
+jupyter>=1.0.0
+jupyterlab>=3.4.0
+
+# Data handling and visualization
+pandas>=1.5.0  # For data analysis
+h5py>=3.7.0    # For HDF5 file handling
+plotly>=5.0.0  # Interactive plotting
+
+# Performance profiling
+line_profiler>=4.0.0
+memory_profiler>=0.60.0

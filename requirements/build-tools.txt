@@ -1,0 +1,26 @@
+# requirements/build-tools.txt
+# Version specifications for build tools and dependencies
+
+# Build system
+cmake >= 3.16
+ninja-build >= 1.10
+
+# Compilers
+gcc >= 9.0
+g++ >= 9.0
+
+# Python
+python3 >= 3.8
+
+# Testing
+googletest = 1.12.1
+
+# NASA SPICE
+# Note: Downloaded directly from NASA NAIF
+# Version: N0067 (latest stable)
+# URL: https://naif.jpl.nasa.gov/pub/naif/toolkit/C/PC_Linux_GCC_64bit/packages/cspice.tar.Z
+
+# Python packages (see python-requirements.txt)
+pybind11 >= 2.10.0
+numpy >= 1.21.0
+pytest >= 7.0.0

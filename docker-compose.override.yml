@@ -1,0 +1,36 @@
+
+# Override configuration for different environments
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.override.yml up
+# ---
+# docker-compose.override.yml (example for local development)
+version: '3.8'
+
+services:
+  oasis-dev:
+    # Development overrides
+    environment:
+      # Enable debugging
+      - CMAKE_BUILD_TYPE=Debug
+      - ASAN_OPTIONS=detect_leaks=1:abort_on_error=1
+      - UBSAN_OPTIONS=print_stacktrace=1:abort_on_error=1
+    
+    # Mount additional development tools
+    volumes:
+      # Mount VSCode settings if available
+      - ${HOME}/.vscode:/home/developer/.vscode-host:ro
+      
+      # Mount additional development directories
+      - /tmp:/tmp:cached
+    
+    # Port forwarding for Jupyter/web interfaces (if needed)
+    ports:
+      - "8888:8888"  # Jupyter
+      - "8000:8000"  # HTTP server
+    
+    # Enable privileged mode for debugging tools like Valgrind
+    privileged: false
+    cap_add:
+      - SYS_PTRACE  # Required for debugging
+    
+    # Custom command for development
+    command: /bin/bash

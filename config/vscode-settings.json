@@ -1,0 +1,130 @@
+{
+    "cmake.configureOnOpen": true,
+    "cmake.buildDirectory": "${workspaceFolder}/build",
+    "cmake.generator": "Ninja",
+    "cmake.buildTask": true,
+    "cmake.defaultVariants": {
+        "buildType": {
+            "default": "debug",
+            "choices": {
+                "debug": {
+                    "short": "Debug",
+                    "long": "Debug build with symbols",
+                    "buildType": "Debug"
+                },
+                "release": {
+                    "short": "Release",
+                    "long": "Optimized release build",
+                    "buildType": "Release"
+                },
+                "relwithdebinfo": {
+                    "short": "RelWithDebInfo",
+                    "long": "Release with debug symbols",
+                    "buildType": "RelWithDebInfo"
+                }
+            }
+        }
+    },
+    "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
+    "C_Cpp.default.cppStandard": "c++17",
+    "C_Cpp.default.intelliSenseMode": "linux-gcc-x64",
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/src/**",
+        "${workspaceFolder}/third_party/**",
+        "/opt/spice/cspice/include",
+        "/usr/local/include"
+    ],
+    "C_Cpp.default.defines": [
+        "_GNU_SOURCE"
+    ],
+    "C_Cpp.default.compilerPath": "/usr/bin/g++",
+    "C_Cpp.errorSquiggles": "enabled",
+    "C_Cpp.autocompleteAddParentheses": true,
+    "python.defaultInterpreterPath": "/usr/bin/python3",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+        "--max-line-length=88",
+        "--extend-ignore=E203,W503"
+    ],
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--line-length=88"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "tests/python"
+    ],
+    "python.testing.unittestEnabled": false,
+    "files.associations": {
+        "*.hpp": "cpp",
+        "*.tpp": "cpp",
+        "*.ipp": "cpp",
+        "CMakeLists.txt": "cmake",
+        "*.cmake": "cmake"
+    },
+    "files.exclude": {
+        "**/build/**": true,
+        "**/.docker-volumes/**": true,
+        "**/__pycache__/**": true,
+        "**/*.pyc": true,
+        "**/.pytest_cache/**": true,
+        "**/.coverage": true
+    },
+    "search.exclude": {
+        "**/build/**": true,
+        "**/.docker-volumes/**": true,
+        "**/third_party/**": true
+    },
+    "editor.rulers": [80, 100],
+    "editor.trimAutoWhitespace": true,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "[cpp]": {
+        "editor.tabSize": 4,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "[c]": {
+        "editor.tabSize": 4,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "[python]": {
+        "editor.tabSize": 4,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "[cmake]": {
+        "editor.tabSize": 4
+    },
+    "[json]": {
+        "editor.tabSize": 2
+    },
+    "[yaml]": {
+        "editor.tabSize": 2
+    },
+    "cmake.configureSettings": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "BUILD_TESTING": "ON"
+    },
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "/bin/bash",
+            "args": []
+        }
+    },
+    "extensions.recommendations": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "ms-python.python",
+        "ms-python.black-formatter",
+        "ms-python.flake8",
+        "ms-vscode.test-adapter-converter",
+        "matepek.vscode-catch2-test-adapter",
+        "twxs.cmake",
+        "ms-vscode-remote.remote-containers"
+    ]
+}

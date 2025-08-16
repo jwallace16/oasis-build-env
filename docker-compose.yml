@@ -1,0 +1,129 @@
+version: '3.8'
+
+services:
+  oasis-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USERNAME: developer
+        USER_UID: ${USER_UID:-1000}
+        USER_GID: ${USER_GID:-1000}
+    image: oasis-dev:latest
+    container_name: oasis-dev
+    
+    # Keep container running
+    stdin_open: true
+    tty: true
+    
+    # Volume mounts for development
+    volumes:
+      # Mount the workspace (OASIS source code)
+      - .:/workspace:cached
+      
+      # Mount user's git config and SSH keys for git operations
+      - ${HOME}/.gitconfig:/home/developer/.gitconfig:ro
+      - ${HOME}/.ssh:/home/developer/.ssh:ro
+      
+      # Persistent volumes for build artifacts and dependencies
+      - build-cache:/workspace/build
+      - pip-cache:/home/developer/.cache/pip
+      - cmake-cache:/home/developer/.cmake
+      
+      # VSCode extensions and settings persistence
+      - vscode-extensions:/home/developer/.vscode-server/extensions
+      - vscode-data:/home/developer/.vscode-server
+    
+    # Environment variables
+    environment:
+      # Development settings
+      - CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE:-Debug}
+      - CMAKE_EXPORT_COMPILE_COMMANDS=ON
+      - PYTHONPATH=/workspace/python
+      
+      # Build optimization
+      - CMAKE_BUILD_PARALLEL_LEVEL=${CMAKE_BUILD_PARALLEL_LEVEL:-4}
+      - MAKEFLAGS=-j${CMAKE_BUILD_PARALLEL_LEVEL:-4}
+      
+      # Development tools
+      - EDITOR=${EDITOR:-vim}
+      - TERM=xterm-256color
+      
+      # User information (will be overridden by mounted .gitconfig)
+      - GIT_AUTHOR_NAME=${GIT_AUTHOR_NAME:-OASIS Developer}
+      - GIT_AUTHOR_EMAIL=${GIT_AUTHOR_EMAIL:-developer@oasis-sim.local}
+      - GIT_COMMITTER_NAME=${GIT_COMMITTER_NAME:-OASIS Developer}
+      - GIT_COMMITTER_EMAIL=${GIT_COMMITTER_EMAIL:-developer@oasis-sim.local}
+    
+    # Networking
+    networks:
+      - oasis-network
+    
+    # Resource limits (adjust based on your system)
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4.0'
+        reservations:
+          memory: 2G
+          cpus: '1.0'
+    
+    # Working directory
+    working_dir: /workspace
+    
+    # Default user
+    user: developer
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Health check to ensure the container is ready
+    healthcheck:
+      test: ["CMD", "python3", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+# Named volumes for persistence
+volumes:
+  build-cache:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/.docker-volumes/build-cache
+  
+  pip-cache:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/.docker-volumes/pip-cache
+  
+  cmake-cache:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/.docker-volumes/cmake-cache
+  
+  vscode-extensions:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/.docker-volumes/vscode-extensions
+  
+  vscode-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/.docker-volumes/vscode-data
+
+# Network for potential multi-container setups
+networks:
+  oasis-network:
+    driver: bridge
